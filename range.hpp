@@ -66,7 +66,8 @@ namespace NRaingee
         inline TRange(TInputIterator first, TInputIterator last,
             typename NReinventedWheels::TEnableIf<
                 !std::numeric_limits<TInputIterator>::is_integer
-                && !TIsCallable<TInputIterator>::Value_>::TType_* = 0)
+                && !TIsNullaryCallable<TInputIterator, TType>::Value_
+            >::TType_* = 0)
             : Impl_(first == last ?
                 0 : new TSequenceRangeImpl<TType>(first, last))
         {
@@ -75,7 +76,7 @@ namespace NRaingee
         template <class TGenerator, class TCounter>
         inline TRange(TGenerator generator, TCounter counter,
             typename NReinventedWheels::TEnableIf<
-                TIsCallable<TGenerator>::Value_>::TType_* = 0)
+                TIsNullaryCallable<TGenerator, TType>::Value_>::TType_* = 0)
             : Impl_(!counter ?
                 0 : new TGeneratedRangeImpl<TType, TGenerator, TCounter>(
                     generator, counter))
