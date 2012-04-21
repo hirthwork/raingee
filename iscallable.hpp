@@ -221,7 +221,8 @@ namespace NRaingee
     template <class TFunctor, class TResult>
     struct TIsNullaryCallableImpl
     {
-        static const bool Value_ = TIsNullaryFunction<TFunctor, TResult>::Value_
+        static const bool Value_ =
+            TIsNullaryFunction<TFunctor, TResult>::Value_
             || TIsNullaryFunctor<!TIsConst<TFunctor>::Value_
                 && !TIsVolatile<TFunctor>::Value_, TFunctor, TResult>::Value_
             || TIsNullaryConstFunctor<TIsConst<TFunctor>::Value_
@@ -239,7 +240,8 @@ namespace NRaingee
             TIsNullaryCallableImpl<TFunctor, TResult>::Value_
             || TIsNullaryCallableImpl<TFunctor, const TResult>::Value_
             || TIsNullaryCallableImpl<TFunctor, volatile TResult>::Value_
-            || TIsNullaryCallableImpl<TFunctor, const volatile TResult>::Value_;
+            || TIsNullaryCallableImpl<TFunctor,
+                const volatile TResult>::Value_;
     };
 
     template <class TFunctor, class TResult>
@@ -250,7 +252,8 @@ namespace NRaingee
             || TIsNullaryCallableImpl<TFunctor, TResult&>::Value_
             || TIsNullaryCallableImpl<TFunctor, const TResult&>::Value_
             || TIsNullaryCallableImpl<TFunctor, volatile TResult&>::Value_
-            || TIsNullaryCallableImpl<TFunctor, const volatile TResult&>::Value_;
+            || TIsNullaryCallableImpl<TFunctor,
+                const volatile TResult&>::Value_;
     };
 
     template <class TFunctor, class TResult>
@@ -270,14 +273,16 @@ namespace NRaingee
                 typename TRemoveConst<TResult>::TType_>::Value_
             || TIsNullaryCallableCVSelectorImpl<TFunctor,
                 typename TRemoveVolatile<TResult>::TType_>::Value_
-            || TIsNullaryCallableCVSelectorImpl<TFunctor, typename TRemoveConst<
-                typename TRemoveVolatile<TResult>::TType_>::TType_>::Value_;
+            || TIsNullaryCallableCVSelectorImpl<TFunctor,
+                typename TRemoveConst<typename TRemoveVolatile<TResult>::TType_
+                    >::TType_>::Value_;
     };
 
     template <class TFunctor>
     struct TIsNullaryCallable<TFunctor, void>
     {
-        static const bool Value_ = TIsNullaryCallableImpl<TFunctor, void>::Value_;
+        static const bool Value_ =
+            TIsNullaryCallableImpl<TFunctor, void>::Value_;
     };
 }
 
